@@ -34,6 +34,24 @@ function calcularTriangulo(lado1, lado2, base, altura) {
     }
 }
 
+function calcularAlturaTriangulo(lado1, base) {
+    if (lado1 == base) {
+        console.warn("Este no es un triangulo isoceles");
+    }else {
+        const altura = Math.sqrt((lado1 * lado1) - ((base * base) / 4));
+        return altura;
+    }
+}
+
+function calcularAlturaTrianguloEscaleno(lado1, lado2, base) {
+    if (lado1 == lado2|| lado1 == base || lado2 == base) {
+        console.warn("Este no es un triangulo escaleno");
+    }else {
+        const altura = Math.sqrt((lado1 * lado1) - ((base * base) / 4));
+        return altura;
+    }
+}
+
 console.log({
     ladoTriangulo1,
     ladoTriangulo2,
@@ -69,3 +87,5 @@ function calcularCirculo(radio) {
     }
 }
 console.groupEnd("Circulos");
+
+

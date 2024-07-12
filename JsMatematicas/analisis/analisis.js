@@ -47,3 +47,58 @@ function proyeccionPorPersona(nombrePersona){
 
     console.log(ultimoSalario, nuevoSalario);
 }
+
+// Analisis empresarial
+const empresa = {};
+for (persona of salarios){
+    for (trabajo of persona.trabajos){
+        if (!empresa[trabajo.empresa]){
+            empresa[trabajo.empresa] = {};
+        }
+
+        if (!empresa[trabajo.empresa][trabajo.year]){
+            empresa[trabajo.empresa][trabajo.year] = [];
+        }
+
+        empresa[trabajo.empresa][trabajo.year].push(trabajo.salario);
+    }
+}
+console.log(empresa);
+
+function medianaEmpresaYear(nombre, year){
+    if (!empresa[nombre]) {
+        console.warm('No existe la empresa');
+    }else if (!empresa[nombre][year]){
+        console.warm('No existe el año');
+    } else {
+        return PlatziMath.calcularMediana(empresa[nombre][year]);
+    }
+}
+
+function proyeccionPorEmpresa(nombre){
+    if (!empresa[nombre]){
+        console.warm('No existe la empresa');
+    }else{
+        const empresaYears = Object.keys(empresa[nombre]);
+        const listaMedianaYears = empresaYears.map((year) => {
+            return medianaEmpresaYear(nombre, year);
+        });
+        
+        let porcentajesCrecimiento = [];
+
+        for (let i = 1; i < listaMedianaYears.length; i++){
+            const salarioActual = listaMedianaYears[i];
+            const salarioAnterior = listaMedianaYears[i - 1];
+            const porcentajeCrecimiento = ((salarioActual - salarioAnterior) / salarioAnterior);
+            porcentajesCrecimiento.push(porcentajeCrecimiento);
+        }
+
+        const medianaPorcentajesCrecimiento = PlatziMath.calcularMediana(porcentajesCrecimiento);
+
+        const ultimoMediana = listaMedianaYears[listaMedianaYears.length - 1];
+        const nuevoMediana = listaMedianaYears[listaMedianaYears.length - 1] * (1 + medianaPorcentajesCrecimiento );
+
+        return nuevoMediana;
+
+    }
+}

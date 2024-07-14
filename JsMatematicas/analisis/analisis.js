@@ -40,12 +40,12 @@ function proyeccionPorPersona(nombrePersona){
     
     const medianaPorcentajesCrecimiento = PlatziMath.calcularMediana(porcentajesCrecimiento);
 
-    console.log(porcentajesCrecimiento, medianaPorcentajesCrecimiento);
+    //console.log(porcentajesCrecimiento, medianaPorcentajesCrecimiento);
 
     const ultimoSalario = trabajos[trabajos.length - 1].salario;
     const nuevoSalario = trabajos[trabajos.length - 1].salario * (1 + medianaPorcentajesCrecimiento);
 
-    console.log(ultimoSalario, nuevoSalario);
+    //console.log(ultimoSalario, nuevoSalario);
 }
 
 // Analisis empresarial
@@ -101,4 +101,31 @@ function proyeccionPorEmpresa(nombre){
         return nuevoMediana;
 
     }
+}
+
+function medianaGeneral(){
+    const listaMedianas = salarios.map(
+        (persona) => medianaPorPersona(persona.name)
+    );
+
+    const mediana = PlatziMath.calcularMediana(listaMedianas);
+
+    return mediana;
+}
+
+function medianaTop10() {
+    const listaMedianas = salarios.map(
+        (persona) => medianaPorPersona(persona.name)
+    );
+    
+    const medianasOrdenadas = PlatziMath.ordenarLista(listaMedianas);
+
+    const cantidad = listaMedianas.length /10;
+    const limite = listaMedianas.length - cantidad;
+
+    const top10 = medianasOrdenadas.slice(limite, medianasOrdenadas.length);
+
+    const medianaTop10 = PlatziMath.calcularMediana(top10);
+
+    console.log({medianaTop10});
 }
